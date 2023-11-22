@@ -1,0 +1,24 @@
+/* YearsPage.css */
+.years-page-container {
+    text-align: center;
+  }
+  
+  .years-page-container select {
+    width: calc(33.33% - 10px);
+    margin: 0 5px;
+  }
+  
+  .years-page-container button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .years-page-container button:hover {
+    background-color: #45a049;
+  }
+  

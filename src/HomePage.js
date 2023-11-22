@@ -1,48 +1,96 @@
-// HomePage.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Papa from 'papaparse';
 import { useNavigate } from 'react-router-dom';
-import './HomePage.css';
-
+import './styles.css'
 const HomePage = () => {
-  const [countries, setCountries] = useState(['', '']);
-  const navigate = useNavigate();
+  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [years, setYears] = useState([]);
+  const [countries, setCountries] = useState([]);
 
-  const handleCountryChange = (index, value) => {
-    const newCountries = [...countries];
-    newCountries[index] = value;
-    setCountries(newCountries);
-  };
+  useEffect(() => {
+    // Load CSV file and extract columns
+    const csvFilePath = `/Exchange_Rate_Report Zip FIle/Exchange_Rate_Report_${selectedYear}.csv`;
 
-  const generateAnalysis = () => {
-    if (countries[0] && countries[1]) {
-      navigate(`/analysis?country1=${countries[0]}&country2=${countries[1]}`);
+    Papa.parse(csvFilePath, {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: (result) => {
+        const columns = result.meta.fields || [];
+
+        // Extract unique years
+        const uniqueYears = Array.from(new Set(result.data.map((row) => row.Date)));
+        setYears(uniqueYears);
+
+        // Extract unique countries
+        const uniqueCountries = columns.slice(1); // Exclude the 'Date' column
+        setCountries(uniqueCountries);
+      },
+    });
+  }, [selectedYear]);
+
+  const handleGenerateAnalysis = () => {
+    if (selectedYear && selectedCountry) {
+      // Fetch the data for the selected year and country
+      const csvFilePath = `/Exchange_Rate_Report Zip FIle/Exchange_Rate_Report_${selectedYear}.csv`;
+
+      Papa.parse(csvFilePath, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: (result) => {
+          const dataForSelectedCountry = result.data.map((row) => ({
+            date: row.Date,
+            exchangeRate: parseFloat(row[selectedCountry]),
+          }));
+
+          // Calculate average exchange rate
+          const totalExchangeRate = dataForSelectedCountry.reduce(
+            (sum, row) => sum + row.exchangeRate,
+            0
+          );
+          const averageExchangeRate = totalExchangeRate / dataForSelectedCountry.length;
+
+          // Display the analysis
+          console.log(`Average exchange rate for ${selectedCountry} in ${selectedYear}: ${averageExchangeRate}`);
+        },
+      });
     } else {
-      alert('Please select both countries.');
+      console.warn('Please select both year and country before generating analysis.');
     }
   };
 
   return (
-    <div className="home-container">
-      <h2>Home Page</h2>
-      <label>Country 1:</label>
-      <input
-        className="home-input"
-        type="text"
-        value={countries[0]}
-        onChange={(e) => handleCountryChange(0, e.target.value)}
-      />
+    <div>
+      <h1>Exchange Rate Analysis</h1>
+      <label>Select Year:</label>
+      <select
+        value={selectedYear}
+        onChange={(e) => setSelectedYear(e.target.value)}
+      >
+        {years.map((year) => (
+          <option key={year} value={year}>
+            {year}
+          </option>
+        ))}
+      </select>
       <br />
-      <label>Country 2:</label>
-      <input
-        className="home-input"
-        type="text"
-        value={countries[1]}
-        onChange={(e) => handleCountryChange(1, e.target.value)}
-      />
+
+      <label>Select Country:</label>
+      <select
+        value={selectedCountry}
+        onChange={(e) => setSelectedCountry(e.target.value)}
+      >
+        {countries.map((country) => (
+          <option key={country} value={country}>
+            {country}
+          </option>
+        ))}
+      </select>
       <br />
-      <button className="home-button" onClick={generateAnalysis}>
-        Generate Analysis
-      </button>
+
+      <button onClick={handleGenerateAnalysis}>Generate Analysis</button>
     </div>
   );
 };

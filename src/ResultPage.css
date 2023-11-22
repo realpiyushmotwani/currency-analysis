@@ -1,0 +1,13 @@
+/* ResultPage.css */
+.result-container {
+    text-align: center;
+  }
+  
+  .result-container p {
+    margin: 10px 0;
+  }
+  
+  .result-container h1 {
+    color: #333;
+  }
+  

@@ -1,0 +1,48 @@
+/* CountriesForm.css */
+.countries-form-container {
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .countries-form-container h1 {
+    color: #333;
+  }
+  
+  .countries-form-container p {
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  .countries-form-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #777;
+  }
+  
+  .countries-form-container input,
+  .countries-form-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .countries-form-container button {
+    background-color: #4caf50;
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .countries-form-container button:hover {
+    background-color: #45a049;
+  }
+  
