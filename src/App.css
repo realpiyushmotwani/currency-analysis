@@ -1,0 +1,33 @@
+/* App.css */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  background-color: #3498db;
+  color: #fff;
+  padding: 1em;
+  text-align: center;
+}
+
+.navbar {
+  background-color: #2c3e50;
+  padding: 1em;
+  text-align: center;
+}
+
+.navbar a {
+  color: #fff;
+  margin: 0 1em;
+  text-decoration: none;
+}
+
+/* Add more styling as needed */
+

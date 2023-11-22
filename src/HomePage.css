@@ -1,0 +1,17 @@
+/* HomePage.css */
+.home-container {
+    margin-top: 2em;
+  }
+  
+  .home-input {
+    margin-bottom: 1em;
+  }
+  
+  .home-button {
+    background-color: #27ae60;
+    color: #fff;
+    padding: 0.5em 1em;
+    border: none;
+    cursor: pointer;
+  }
+  
